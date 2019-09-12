@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">ImagePicker</string>
+
+    <string name="image_picker">Picture Selector</string>
+    <string name="scanner_image">Scanning image..</string>
+    <string name="select_image_max">Maximum selection of %1$d pictures</string>
+    <string name="confirm">Confirm</string>
+    <string name="confirm_msg">Confirm（%1$d/%2$d）</string>
+    <string name="image_num">%d</string>
+    <string name="scanner_image_no_found">No scanned image</string>
+    <string name="all_media">All</string>
+    <string name="all_video">All Videos</string>
+    <string name="take_photo">Taking pictures</string>
+    <string name="permission_tip">No memory card or camera permissions currently read</string>
+    <string name="image_select">Select</string>
+    <string name="single_type_choose">Cannot select images and videos at the same time</string></resources>
