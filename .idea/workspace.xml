@@ -205,7 +205,7 @@
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$USER_HOME$/Downloads/sdk" />
     <property name="device.picker.selection" value="988954474a58583745" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/imagepicker/src/main/java/com/jimes/library/imagepicker/utils" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="show.migrate.to.gradle.popup" value="false" />
