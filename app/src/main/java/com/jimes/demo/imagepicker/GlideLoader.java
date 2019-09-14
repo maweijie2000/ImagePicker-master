@@ -9,10 +9,6 @@ import com.jimes.library.imagepicker.utils.ImageLoader;
 
 /**
  * 实现自定义图片加载
- * Create by: chenWei.li
- * Date: 2018/8/30
- * Time: 下午11:10
- * Email: lichenwei.me@foxmail.com
  */
 public class GlideLoader implements ImageLoader {
 
