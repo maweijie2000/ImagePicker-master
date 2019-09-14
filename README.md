@@ -6,6 +6,8 @@
 
 
 ##########
+
+
   ImagePicker.getInstance()
                         .setTitle("标题")//设置标题
                         .showCamera(true)//设置是否显示拍照按钮
@@ -18,13 +20,20 @@
                         .setImageLoader(new GlideLoader())//设置自定义图片加载器
                         .start(MainActivity.this, REQUEST_SELECT_IMAGES_CODE);//REQEST_SELECT_IMAGES_CODE 为 Intent 调用的 requestCode
 
+
 #########################
+
+
+
  public class GlideLoader implements ImageLoader {
                 //to do something 可以参考 Demo 用法
 
             }
                         
 ######################
+
+
+
    ImagePicker.getInstance()
                         .setTitle("标题")//设置标题
                         .showCamera(true)//设置是否显示拍照按钮
@@ -39,6 +48,9 @@
                         
                         
 ##############################
+
+
+
   @Override
                 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
                     if (requestCode == REQUEST_SELECT_IMAGES_CODE && resultCode == RESULT_OK) {
