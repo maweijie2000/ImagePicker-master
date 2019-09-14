@@ -1,11 +1,13 @@
 package com.jimes.library.imagepicker;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import com.jimes.library.imagepicker.activity.ImagePickerActivity;
 import com.jimes.library.imagepicker.manager.ConfigManager;
 import com.jimes.library.imagepicker.utils.ImageLoader;
+import com.jimes.library.imagepicker.utils.PreferenceUtil;
 
 import java.util.ArrayList;
 
@@ -129,6 +131,19 @@ public class ImagePicker {
     }
 
     /**
+     * 设置图片选择历史记录
+     *
+     * @param language
+     * @return
+     */
+    public ImagePicker setLanguage(Context context, String language) {
+        PreferenceUtil p = PreferenceUtil.getInstance();
+        p.init(context, "language");
+        p.putString("language",language);
+        return mImagePicker;
+    }
+
+    /**
      * 启动
      *
      * @param activity
@@ -137,5 +152,6 @@ public class ImagePicker {
         Intent intent = new Intent(activity, ImagePickerActivity.class);
         activity.startActivityForResult(intent, requestCode);
     }
+
 
 }

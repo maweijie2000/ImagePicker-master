@@ -85,6 +85,13 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
         View view;
         if (viewType == ItemType.ITEM_TYPE_CAMERA) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_camera, null);
+            TextView take_pic = view.findViewById(R.id.take_pic);
+
+            if (ConfigManager.getInstance().isChinese(mContext))
+                take_pic.setText("拍摄图片");
+            else
+                take_pic.setText("Taking pictures");
+
             return new BaseHolder(view);
         }
         if (viewType == ItemType.ITEM_TYPE_IMAGE) {

@@ -27,10 +27,9 @@
             android:drawableRight="@mipmap/icon_album_index"
             android:drawablePadding="4dp"
             android:gravity="center"
-            android:text="@string/all_media"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            tool:text="@string/all_media" />
+            />
 
     </RelativeLayout>
 

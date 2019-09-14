@@ -5,6 +5,8 @@ import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -16,6 +18,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -47,6 +50,7 @@ import com.jimes.library.imagepicker.view.ImageFolderPopupWindow;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 多图选择器主页面
@@ -129,7 +133,9 @@ public class ImagePickerActivity extends BaseActivity implements ImagePickerAdap
      */
     @Override
     protected void initConfig() {
+
         mTitle = ConfigManager.getInstance().getTitle();
+
         isShowCamera = ConfigManager.getInstance().isShowCamera();
         isShowImage = ConfigManager.getInstance().isShowImage();
         isShowVideo = ConfigManager.getInstance().isShowVideo();
@@ -151,15 +157,22 @@ public class ImagePickerActivity extends BaseActivity implements ImagePickerAdap
     @Override
     protected void initView() {
 
-        mProgressDialog = ProgressDialog.show(this, null, getString(R.string.scanner_image));
+        if (ConfigManager.getInstance().isChinese(this))
+            mProgressDialog = ProgressDialog.show(this, null, "正在扫描图片..");
+        else
+            mProgressDialog = ProgressDialog.show(this, null, "Scanning image..");
 
         //顶部栏相关
         mTvTitle = findViewById(R.id.tv_actionBar_title);
         if (TextUtils.isEmpty(mTitle)) {
-            mTvTitle.setText(getString(R.string.image_picker));
+            if (ConfigManager.getInstance().isChinese(ImagePickerActivity.this))
+                mTvTitle.setText("图片选择器");
+            else
+                mTvTitle.setText("Picture Selector");
         } else {
             mTvTitle.setText(mTitle);
         }
+
         mTvCommit = findViewById(R.id.tv_actionBar_commit);
 
         //滑动悬浮标题相关
@@ -168,6 +181,10 @@ public class ImagePickerActivity extends BaseActivity implements ImagePickerAdap
         //底部栏相关
         mRlBottom = findViewById(R.id.rl_main_bottom);
         mTvImageFolders = findViewById(R.id.tv_main_imageFolders);
+        if (ConfigManager.getInstance().isChinese(this))
+            mTvImageFolders.setText("全部");
+        else
+            mTvImageFolders.setText("All");
 
         //列表相关
         mRecyclerView = findViewById(R.id.rv_main_images);
@@ -267,7 +284,7 @@ public class ImagePickerActivity extends BaseActivity implements ImagePickerAdap
                     startScannerTask();
                 } else {
                     //没有权限
-                    Log.e("", getString(R.string.permission_tip));
+                    Log.e("", "当前没有读取存储卡或摄像头权限");
                     finish();
                 }
             }
@@ -480,17 +497,26 @@ public class ImagePickerActivity extends BaseActivity implements ImagePickerAdap
         int selectCount = SelectionManager.getInstance().getSelectPaths().size();
         if (selectCount == 0) {
             mTvCommit.setEnabled(false);
-            mTvCommit.setText(getString(R.string.confirm));
+            if (ConfigManager.getInstance().isChinese(this))
+                mTvCommit.setText("确定");
+            else
+                mTvCommit.setText("Confirm");
             return;
         }
         if (selectCount < mMaxCount) {
             mTvCommit.setEnabled(true);
-            mTvCommit.setText(String.format(getString(R.string.confirm_msg), selectCount, mMaxCount));
+            if (ConfigManager.getInstance().isChinese(this))
+                mTvCommit.setText(String.format("确定（%1$d/%2$d）", selectCount, mMaxCount));
+            else
+                mTvCommit.setText(String.format("Confirm（%1$d/%2$d）", selectCount, mMaxCount));
             return;
         }
         if (selectCount == mMaxCount) {
             mTvCommit.setEnabled(true);
-            mTvCommit.setText(String.format(getString(R.string.confirm_msg), selectCount, mMaxCount));
+            if (ConfigManager.getInstance().isChinese(this))
+                mTvCommit.setText(String.format("确定（%1$d/%2$d）", selectCount, mMaxCount));
+            else
+                mTvCommit.setText(String.format("Confirm（%1$d/%2$d）", selectCount, mMaxCount));
             return;
         }
     }
@@ -506,7 +532,10 @@ public class ImagePickerActivity extends BaseActivity implements ImagePickerAdap
             if (!selectPathList.isEmpty()) {
                 if (MediaFileUtil.isVideoFileType(selectPathList.get(0))) {
                     //如果存在视频，就不能拍照了
-                    Toast.makeText(this, getString(R.string.single_type_choose), Toast.LENGTH_SHORT).show();
+                    if (ConfigManager.getInstance().isChinese(this))
+                        Toast.makeText(this, "不能同时选择图片与视频", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(this, "Cannot select images and videos at the same time", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }

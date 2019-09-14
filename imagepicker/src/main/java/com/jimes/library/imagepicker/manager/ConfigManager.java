@@ -1,6 +1,10 @@
 package com.jimes.library.imagepicker.manager;
 
+import android.content.Context;
+import android.text.TextUtils;
+
 import com.jimes.library.imagepicker.utils.ImageLoader;
+import com.jimes.library.imagepicker.utils.PreferenceUtil;
 
 import java.util.ArrayList;
 
@@ -116,4 +120,12 @@ public class ConfigManager {
     public void setImageLoader(ImageLoader imageLoader) {
         this.imageLoader = imageLoader;
     }
+
+    public boolean isChinese(Context context){
+        PreferenceUtil p = PreferenceUtil.getInstance();
+        p.init(context, "language");
+        String language = p.getString("language","zh");
+        return !TextUtils.isEmpty(language) && "zh".equals(language);
+    }
+
 }

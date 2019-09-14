@@ -16,12 +16,13 @@
         android:src="@mipmap/icon_image_camera" />
 
     <TextView
+        android:id="@+id/take_pic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:text="@string/take_photo"
         android:textColor="@color/text_color_white"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
 </com.jimes.library.imagepicker.view.SquareRelativeLayout>

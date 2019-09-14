@@ -50,7 +50,15 @@ public class ImageFoldersAdapter extends RecyclerView.Adapter<ImageFoldersAdapte
             holder.mFolderName.setText(folderName);
         }
 
-        holder.mImageSize.setText(String.format(mContext.getString(R.string.image_num), imageSize));
+        if (ConfigManager.getInstance().isChinese(mContext))
+            holder.tv_item_folderName.setText(String.format("全部", imageSize));
+        else
+            holder.tv_item_folderName.setText(String.format("All", imageSize));
+
+        if (ConfigManager.getInstance().isChinese(mContext))
+            holder.mImageSize.setText(String.format("%d张", imageSize));
+        else
+            holder.mImageSize.setText(String.format("%d", imageSize));
 
         if (mCurrentImageFolderIndex == position) {
             holder.mImageFolderCheck.setVisibility(View.VISIBLE);
@@ -88,6 +96,7 @@ public class ImageFoldersAdapter extends RecyclerView.Adapter<ImageFoldersAdapte
         private TextView mFolderName;
         private TextView mImageSize;
         private ImageView mImageFolderCheck;
+        private TextView tv_item_folderName;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -95,6 +104,7 @@ public class ImageFoldersAdapter extends RecyclerView.Adapter<ImageFoldersAdapte
             mFolderName = itemView.findViewById(R.id.tv_item_folderName);
             mImageSize = itemView.findViewById(R.id.tv_item_imageSize);
             mImageFolderCheck = itemView.findViewById(R.id.iv_item_check);
+            tv_item_folderName = itemView.findViewById(R.id.tv_item_folderName);
         }
     }
 

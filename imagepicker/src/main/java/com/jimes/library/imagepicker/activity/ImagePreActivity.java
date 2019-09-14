@@ -42,6 +42,8 @@ public class ImagePreActivity extends BaseActivity {
     private ImageView mIvPreCheck;
     private ImagePreViewAdapter mImagePreViewAdapter;
 
+    private TextView choose;
+
 
     @Override
     protected int bindLayout() {
@@ -56,6 +58,12 @@ public class ImagePreActivity extends BaseActivity {
         mViewPager = findViewById(R.id.vp_main_preImage);
         mLlPreSelect = findViewById(R.id.ll_pre_select);
         mIvPreCheck = findViewById(R.id.iv_item_check);
+        choose = findViewById(R.id.choose);
+
+        if (ConfigManager.getInstance().isChinese(this))
+            choose.setText("选择");
+        else
+            choose.setText("Select");
     }
 
     @Override
@@ -98,7 +106,11 @@ public class ImagePreActivity extends BaseActivity {
                         //判断选中集合中第一项是否为视频
                         if (!SelectionManager.isCanAddSelectionPaths(mMediaFileList.get(mViewPager.getCurrentItem()).getPath(), selectPathList.get(0))) {
                             //类型不同
-                            Toast.makeText(ImagePreActivity.this, getString(R.string.single_type_choose), Toast.LENGTH_SHORT).show();
+                            if (ConfigManager.getInstance().isChinese(ImagePreActivity.this))
+                                Toast.makeText(ImagePreActivity.this, "不能同时选择图片与视频", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(ImagePreActivity.this, "Cannot select images and videos at the same time", Toast.LENGTH_SHORT).show();
+
                             return;
                         }
                     }
@@ -109,7 +121,10 @@ public class ImagePreActivity extends BaseActivity {
                     updateSelectButton(mMediaFileList.get(mViewPager.getCurrentItem()).getPath());
                     updateCommitButton();
                 } else {
-                    Toast.makeText(ImagePreActivity.this, String.format(getString(R.string.select_image_max), SelectionManager.getInstance().getMaxCount()), Toast.LENGTH_SHORT).show();
+                    if (ConfigManager.getInstance().isChinese(ImagePreActivity.this))
+                        Toast.makeText(ImagePreActivity.this, String.format("最多选择%1$d张图片", SelectionManager.getInstance().getMaxCount()), Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(ImagePreActivity.this, String.format("Maximum selection of %1$d pictures", SelectionManager.getInstance().getMaxCount()), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -168,17 +183,26 @@ public class ImagePreActivity extends BaseActivity {
         int selectCount = SelectionManager.getInstance().getSelectPaths().size();
         if (selectCount == 0) {
             mTvCommit.setEnabled(false);
-            mTvCommit.setText(getString(R.string.confirm));
+            if (ConfigManager.getInstance().isChinese(this))
+                mTvCommit.setText("确定");
+            else
+                mTvCommit.setText("Confirm");
             return;
         }
         if (selectCount < maxCount) {
             mTvCommit.setEnabled(true);
-            mTvCommit.setText(String.format(getString(R.string.confirm_msg), selectCount, maxCount));
+            if (ConfigManager.getInstance().isChinese(this))
+                mTvCommit.setText(String.format("确定（%1$d/%2$d）", selectCount, maxCount));
+            else
+                mTvCommit.setText(String.format("Confirm（%1$d/%2$d）", selectCount, maxCount));
             return;
         }
         if (selectCount == maxCount) {
             mTvCommit.setEnabled(true);
-            mTvCommit.setText(String.format(getString(R.string.confirm_msg), selectCount, maxCount));
+            if (ConfigManager.getInstance().isChinese(this))
+                mTvCommit.setText(String.format("确定（%1$d/%2$d）", selectCount, maxCount));
+            else
+                mTvCommit.setText(String.format("Confirm（%1$d/%2$d）", selectCount, maxCount));
             return;
         }
     }
